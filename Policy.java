@@ -18,7 +18,7 @@ public class Policy {
      * Sets default values for all attributes.
      */
     public Policy() {
-        this.policyNumbe = "";
+        this.policyNumber = "";
         this.providerName = "";
         this.policyholderFirstName = "";
         this.policyholderLastName = "";
