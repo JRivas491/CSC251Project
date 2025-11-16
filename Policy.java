@@ -53,72 +53,6 @@ public class Policy {
         this.policyholderWeight = policyholderWeight;
     }
 
-    // Getters and Setters
-
-    public String getPolicyNumber() {
-        return policyNumber;
-    }
-
-    public void setPolicyNumber(String policyNumber) {
-        this.policyNumber = policyNumber;
-    }
-
-    public String getProviderName() {
-        return providerName;
-    }
-
-    public void setProviderName(String providerName) {
-        this.providerName = providerName;
-    }
-
-    public String getPolicyholderFirstName() {
-        return policyholderFirstName;
-    }
-
-    public void setPolicyholderFirstName(String policyholderFirstName) {
-        this.policyholderFirstName = policyholderFirstName;
-    }
-
-    public String getPolicyholderLastName() {
-        return policyholderLastName;
-    }
-
-    public void setPolicyholderLastName(String policyholderLastName) {
-        this.policyholderLastName = policyholderLastName;
-    }
-
-    public int getPolicyholderAge() {
-        return policyholderAge;
-    }
-
-    public void setPolicyholderAge(int policyholderAge) {
-        this.policyholderAge = policyholderAge;
-    }
-
-    public String getSmokingStatus() {
-        return smokingStatus;
-    }
-
-    public void setSmokingStatus(String smokingStatus) {
-        this.smokingStatus = smokingStatus;
-    }
-
-    public double getPolicyholderHeight() {
-        return policyholderHeight;
-    }
-
-    public void setPolicyholderHeight(double policyholderHeight) {
-        this.policyholderHeight = policyholderHeight;
-    }
-
-    public double getPolicyholderWeight() {
-        return policyholderWeight;
-    }
-
-    public void setPolicyholderWeight(double policyholderWeight) {
-        this.policyholderWeight = policyholderWeight;
-    }
-
     /**
      * Calculates and returns the BMI of the policyholder.
      * BMI = (Policyholder’s Weight * 703) / (Policyholder’s Height^2)
@@ -155,5 +89,36 @@ public class Policy {
         }
 
         return price;
+    }
+
+    /**
+     * Returns a string representation of the Policy object.
+     * @return A formatted string with policy details, policyholder details, BMI, and policy price.
+     */
+    @Override
+    public String toString() {
+        // Use String.format for clean formatting of the output
+        return String.format(
+            "Policy Number: %s\n" +
+            "Provider Name: %s\n" +
+            "Policyholder's First Name: %s\n" +
+            "Policyholder's Last Name: %s\n" +
+            "Policyholder's Age: %d\n" +
+            "Policyholder's Smoking Status: %s\n" +
+            "Policyholder's Height: %.1f inches\n" +
+            "Policyholder's Weight: %.1f pounds\n" +
+            "Policyholder's BMI: %.2f\n" +
+            "Policy Price: $%.2f",
+            policyNumber,
+            providerName,
+            policyholderFirstName,
+            policyholderLastName,
+            policyholderAge,
+            smokingStatus,
+            policyholderHeight,
+            policyholderWeight,
+            calculateBMI(),
+            calculatePrice()
+        );
     }
 }
