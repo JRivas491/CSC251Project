@@ -3,6 +3,9 @@
  */
 public class Policy {
 
+    // Static field to keep track of the number of Policy objects created
+    private static int policyCount = 0;
+
     // Attributes for the insurance policy
     private String policyNumber;
     private String providerName;
@@ -15,7 +18,7 @@ public class Policy {
 
     /**
      * No-argument constructor.
-     * Sets default values for all attributes.
+     * Sets default values for all attributes and increments the policy count.
      */
     public Policy() {
         this.policyNumber = "";
@@ -26,10 +29,12 @@ public class Policy {
         this.smokingStatus = "non-smoker";
         this.policyholderHeight = 0.0;
         this.policyholderWeight = 0.0;
+        policyCount++; // Increment count when a policy object is created
     }
 
     /**
      * Parameterized constructor.
+     * Increments the policy count.
      *
      * @param policyNumber The policy number.
      * @param providerName The provider's name.
@@ -51,6 +56,15 @@ public class Policy {
         this.smokingStatus = smokingStatus;
         this.policyholderHeight = policyholderHeight;
         this.policyholderWeight = policyholderWeight;
+        policyCount++; // Increment count when a policy object is created
+    }
+
+    /**
+     * Gets the total number of Policy objects created.
+     * @return The static count of policies.
+     */
+    public static int getPolicyCount() {
+        return policyCount;
     }
 
     /**
@@ -72,17 +86,14 @@ public class Policy {
     public double calculatePrice() {
         double price = 600.0; // Base fee
 
-        // Additional fee if the policyholder is over 50 years old
         if (policyholderAge > 50) {
             price += 75.0;
         }
 
-        // Additional fee if the policyholder is a smoker
         if (smokingStatus.equalsIgnoreCase("smoker")) {
             price += 100.0;
         }
 
-        // Additional fee if BMI is over 35
         double bmi = calculateBMI();
         if (bmi > 35) {
             price += (bmi - 35) * 20;
