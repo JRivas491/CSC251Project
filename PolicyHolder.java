@@ -1,120 +1,106 @@
-/**
- * The PolicyHolder class models a person associated with an insurance policy.
- */
 public class PolicyHolder {
 
-    // Attributes for the policyholder
-    private String policyNumber;
-    private String providerName;
-    private String policyholderFirstName;
-    private String policyholderLastName;
-    private int policyholderAge;
-    private String smokingStatus; // "smoker" or "non-smoker"
-    private double policyholderHeight; // in inches
-    private double policyholderWeight; // in pounds
+    // Static fields to keep track of counts across all instances
+    private static int smokerCount = 0;
+    private static int nonSmokerCount = 0;
 
-    /**
-     * No-argument constructor.
-     * Sets default values for all attributes.
-     */
-    public PolicyHolder() {
-        this.policyNumber = "";
-        this.providerName = "";
-        this.policyholderFirstName = "";
-        this.policyholderLastName = "";
-        this.policyholderAge = 0;
-        this.smokingStatus = "non-smoker";
-        this.policyholderHeight = 0.0;
-        this.policyholderWeight = 0.0;
+    private String firstName;
+    private String lastName;
+    private int age;
+    private String smokingStatus; 
+    private double height; 
+    private double weight; 
+
+    public PolicyHolder(String firstName, String lastName, int age, String smokingStatus,
+                        double height, double weight) {
+        setFirstName(firstName);
+        setLastName(lastName);
+        setAge(age);
+        setSmokingStatus(smokingStatus);
+        setHeight(height);
+        setWeight(weight);
+        // Update the relevant static count upon object creation
+        if (this.smokingStatus.equalsIgnoreCase("smoker")) {
+            incrementSmokerCount();
+        } else {
+            incrementNonSmokerCount();
+        }
+    }
+    
+    // Private static methods for safe internal counting
+    private static void incrementSmokerCount() {
+        smokerCount++;
     }
 
-    /**
-     * Parameterized constructor.
-     *
-     * @param policyNumber The policy number.
-     * @param providerName The provider's name.
-     * @param policyholderFirstName The policyholder's first name.
-     * @param policyholderLastName The policyholder's last name.
-     * @param policyholderAge The policyholder's age.
-     * @param smokingStatus The policyholder's smoking status.
-     * @param policyholderHeight The policyholder's height in inches.
-     * @param policyholderWeight The policyholder's weight in pounds.
-     */
-    public PolicyHolder(String policyNumber, String providerName, String policyholderFirstName,
-                  String policyholderLastName, int policyholderAge, String smokingStatus,
-                  double policyholderHeight, double policyholderWeight) {
-        this.policyNumber = policyNumber;
-        this.providerName = providerName;
-        this.policyholderFirstName = policyholderFirstName;
-        this.policyholderLastName = policyholderLastName;
-        this.policyholderAge = policyholderAge;
-        this.smokingStatus = smokingStatus;
-        this.policyholderHeight = policyholderHeight;
-        this.policyholderWeight = policyholderWeight;
+    private static void incrementNonSmokerCount() {
+        nonSmokerCount++;
     }
 
-    /**
-     * Calculates and returns the BMI of the policyholder.
-     * BMI = (Policyholder’s Weight * 703) / (Policyholder’s Height^2)
-     *
-     * @return The calculated BMI as a double.
-     */
+    // Public static getters for read-only access to counts
+    public static int getSmokerCount() {
+        return smokerCount;
+    }
+
+    public static int getNonSmokerCount() {
+        return nonSmokerCount;
+    }
+    
+    // ... (rest of the getters/setters, calculateBMI, and toString methods as before, omitted for brevity)
+    public String getFirstName() { return firstName; }
+    public void setFirstName(String firstName) {
+        if (firstName == null || firstName.trim().isEmpty()) {
+            throw new IllegalArgumentException("First name cannot be empty.");
+        }
+        this.firstName = firstName.trim();
+    }
+    public String getLastName() { return lastName; }
+    public void setLastName(String lastName) {
+        if (lastName == null || lastName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Last name cannot be empty.");
+        }
+        this.lastName = lastName.trim();
+    }
+    public int getAge() { return age; }
+    public void setAge(int age) {
+        if (age < 0 || age > 120) { 
+            throw new IllegalArgumentException("Age must be between 0 and 120.");
+        }
+        this.age = age;
+    }
+    public String getSmokingStatus() { return smokingStatus; }
+    public void setSmokingStatus(String smokingStatus) {
+        if (smokingStatus == null || (!smokingStatus.equalsIgnoreCase("smoker") && !smokingStatus.equalsIgnoreCase("non-smoker"))) {
+            throw new IllegalArgumentException("Smoking status must be 'smoker' or 'non-smoker'.");
+        }
+        this.smokingStatus = smokingStatus.toLowerCase(); 
+    }
+    public double getHeight() { return height; }
+    public void setHeight(double height) {
+        if (height <= 0) {
+             throw new IllegalArgumentException("Height must be a positive value.");
+        }
+        this.height = height;
+    }
+    public double getWeight() { return weight; }
+    public void setWeight(double weight) {
+         if (weight <= 0) {
+             throw new IllegalArgumentException("Weight must be a positive value.");
+        }
+        this.weight = weight;
+    }
     public double calculateBMI() {
-        return (policyholderWeight * 703) / (policyholderHeight * policyholderHeight);
+        return (weight * 703) / (height * height);
     }
-
-    /**
-     * Calculates and returns the price of the insurance policy.
-     *
-     * @return The calculated policy price as a double.
-     */
-    public double calculatePrice() {
-        double price = 600.0; // Base fee
-
-        if (policyholderAge > 50) {
-            price += 75.0;
-        }
-
-        if (smokingStatus.equalsIgnoreCase("smoker")) {
-            price += 100.0;
-        }
-
-        double bmi = calculateBMI();
-        if (bmi > 35) {
-            price += (bmi - 35) * 20;
-        }
-
-        return price;
-    }
-
-    /**
-     * Returns a string representation of the PolicyHolder object.
-     * @return A formatted string with policyholder details, BMI, and policy price.
-     */
     @Override
     public String toString() {
-        // Use String.format for clean formatting of the output
         return String.format(
-            "Policy Number: %s\n" +
-            "Provider Name: %s\n" +
-            "Policyholder's First Name: %s\n" +
-            "Policyholder's Last Name: %s\n" +
-            "Policyholder's Age: %d\n" +
-            "Policyholder's Smoking Status: %s\n" +
-            "Policyholder's Height: %.1f inches\n" +
-            "Policyholder's Weight: %.1f pounds\n" +
-            "Policyholder's BMI: %.2f\n" +
-            "Policy Price: $%.2f",
-            policyNumber,
-            providerName,
-            policyholderFirstName,
-            policyholderLastName,
-            policyholderAge,
-            smokingStatus,
-            policyholderHeight,
-            policyholderWeight,
-            calculateBMI(),
-            calculatePrice()
+            "Name: %s %s\n" +
+            "Age: %d\n" +
+            "Smoking Status: %s\n" +
+            "Height: %.1f inches\n" +
+            "Weight: %.1f pounds\n" +
+            "BMI: %.2f",
+            firstName, lastName, age, smokingStatus, height, weight, calculateBMI()
         );
     }
 }
