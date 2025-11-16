@@ -15,7 +15,7 @@ public class Policy {
         setPolicyNumber(policyNumber);
         setProviderName(providerName);
         setPolicyHolder(policyHolder);
-        incrementPolicyCount();
+        incrementPolicyCount(); // Safely increment count
     }
 
     // Getters and Setters with Validation
@@ -44,7 +44,7 @@ public class Policy {
         this.policyHolder = policyHolder;
     }
     
-    // Private method to safely manage the static count
+    // Private method to safely manage the static count internally
     private static void incrementPolicyCount() {
         policyCount++;
     }

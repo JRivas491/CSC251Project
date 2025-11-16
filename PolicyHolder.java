@@ -19,7 +19,6 @@ public class PolicyHolder {
         setSmokingStatus(smokingStatus);
         setHeight(height);
         setWeight(weight);
-        // Update the relevant static count upon object creation
         if (this.smokingStatus.equalsIgnoreCase("smoker")) {
             incrementSmokerCount();
         } else {
@@ -27,7 +26,6 @@ public class PolicyHolder {
         }
     }
     
-    // Private static methods for safe internal counting
     private static void incrementSmokerCount() {
         smokerCount++;
     }
@@ -36,7 +34,6 @@ public class PolicyHolder {
         nonSmokerCount++;
     }
 
-    // Public static getters for read-only access to counts
     public static int getSmokerCount() {
         return smokerCount;
     }
@@ -45,7 +42,6 @@ public class PolicyHolder {
         return nonSmokerCount;
     }
     
-    // ... (rest of the getters/setters, calculateBMI, and toString methods as before, omitted for brevity)
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) {
         if (firstName == null || firstName.trim().isEmpty()) {
